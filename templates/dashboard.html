@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/static/css/styles.css">
+        <link rel="icon" href="/static/img/favicon.png">
+        <title>CPSB System Key | Dashboard</title>
+    </head>
+    <body style="background-color: white;">
+        <div class="main-dashboard">
+            <div class="controls">
+                <div class="control-button" id="add-bank" onclick="show_popup()"></div>
+            </div>
+            <div class="accounts">
+                {% for bank in banks %}
+                <div class="account">
+                    <p class="label">Name: {{ bank["Name"] }}</p>
+                    <p class="label">ID: {{ bank["ID"] }}</p>
+                    <p class="label">Funds: {{ bank ["Funds"] }}</p>
+                    <div class="settings" id="{{ bank["ID"] + "-settings" }}">
+                        <label for="{{ bank["ID"] + "-field" }}" style="font-size: 7mm;">C.F.</label>
+                        <input type="number" min="0" class="input-field-2" id="{{ bank["ID"] + "-field" }}">
+                        <div class="settings-controls">
+                            <div class="control-button cancel settings-button" onclick="hide_settings('{{ bank["ID"] + "-settings" }}');"></div>
+                            <div class="control-button resume settings-button" onclick="update_funds('{{ bank["Name"] }}', '{{ bank["ID"] }}', '{{ bank["ID"] + "-field" }}')"></div>
+                        </div>
+                    </div>
+                    <div class="controls">
+                        <div class="control-button update-data" onclick="show_settings('{{ bank["ID"] + "-settings" }}');"></div>
+                        <div class="control-button delete-data" onclick="delete_bank('{{ bank["ID"] }}');"></div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div id="popup">
+            <div class="popup-content">
+                <label for="popup-name" class="label">Name</label>
+                <input type="text" class="input-field-1" id="popup-name">
+                <label for="popup-funds" class="label">Funds</label>
+                <input type="number" min="0" class="input-field-1" id="popup-funds">
+                <button class="button-submit-1" id="popup-submit" onclick="new_bank()">Add Bank</button>
+                <button class="button-submit-1" id="popup-cancel" onclick="hide_popup()">Cancel</button>
+            </div>
+        </div>
+        <script src="/static/js/script.js"></script>
+        <script>
+            hide_popup()
+        </script>
+    </body>
+</html>
